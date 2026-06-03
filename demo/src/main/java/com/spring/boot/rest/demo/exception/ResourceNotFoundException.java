@@ -1,0 +1,7 @@
+package com.spring.boot.rest.demo.exception;
+
+public class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}

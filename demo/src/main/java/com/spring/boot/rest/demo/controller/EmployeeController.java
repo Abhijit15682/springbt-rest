@@ -3,6 +3,7 @@ package com.spring.boot.rest.demo.controller;
 import com.spring.boot.rest.demo.dto.EmployeeDTO;
 import com.spring.boot.rest.demo.entities.Department;
 import com.spring.boot.rest.demo.entities.Employee;
+import com.spring.boot.rest.demo.exception.ResourceNotFoundException;
 import com.spring.boot.rest.demo.repositories.DepartmentRepository;
 import com.spring.boot.rest.demo.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,11 @@ public class EmployeeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Integer id) {
-        return employeeRepository.findById(id)
-                .map(emp -> ResponseEntity.ok(convertToDTO(emp)))
-                .orElse(ResponseEntity.notFound().build());
+        Employee employee = employeeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with ID: " + id));
+        return ResponseEntity.ok(convertToDTO(employee));
     }
+
 
     @PostMapping
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
