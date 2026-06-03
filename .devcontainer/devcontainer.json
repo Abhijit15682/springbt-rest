@@ -14,6 +14,11 @@
     }
   },
   "features": {
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "21",
+      "installMaven": "true",
+      "installGradle": "false"
+    },
     "ghcr.io/devcontainers-contrib/features/mysql-apt-get:1": {
       "rootPassword": "rootpassword",
       "databaseName": "springboot_db"
