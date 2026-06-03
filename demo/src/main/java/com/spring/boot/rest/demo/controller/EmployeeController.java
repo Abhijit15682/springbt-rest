@@ -6,6 +6,9 @@ import com.spring.boot.rest.demo.entities.Employee;
 import com.spring.boot.rest.demo.exception.ResourceNotFoundException;
 import com.spring.boot.rest.demo.repositories.DepartmentRepository;
 import com.spring.boot.rest.demo.repositories.EmployeeRepository;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +42,7 @@ public class EmployeeController {
 
 
     @PostMapping
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
         return departmentRepository.findById(employeeDTO.getDeptId())
                 .map(department -> {
                     Employee employee = new Employee(
@@ -55,7 +58,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable Integer id, @RequestBody EmployeeDTO employeeDetails) {
+    public ResponseEntity<?> updateEmployee(@PathVariable Integer id, @Valid @RequestBody EmployeeDTO employeeDetails) {
         return employeeRepository.findById(id)
                 .map(employee -> {
                     Department department = departmentRepository.findById(employeeDetails.getDeptId()).orElse(null);

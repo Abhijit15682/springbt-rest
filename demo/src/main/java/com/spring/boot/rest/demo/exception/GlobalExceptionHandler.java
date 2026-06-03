@@ -2,9 +2,15 @@ package com.spring.boot.rest.demo.exception;
 
 import com.spring.boot.rest.demo.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -52,6 +58,29 @@ public class GlobalExceptionHandler {
                 request.getRequestURI()
         );
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, Object>> handleValidationExceptions(
+            MethodArgumentNotValidException ex, HttpServletRequest request) {
+        
+        Map<String, Object> responseBody = new HashMap<>();
+        Map<String, String> errors = new HashMap<>();
+
+        // Extract precise error definitions for every field failure
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        responseBody.put("timestamp", java.time.LocalDateTime.now().toString());
+        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("error", "Validation Failed");
+        responseBody.put("errors", errors);
+        responseBody.put("path", request.getRequestURI());
+
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 }
 
