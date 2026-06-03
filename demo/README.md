@@ -33,3 +33,6 @@ MariaDB [(none)]> FLUSH PRIVILEGES;
 MariaDB [(none)]> EXIT;
 
 mysql -u root -p rootpassword
+
+# Start MySQL Enabling Networking.
+sudo nohup mariadbd --datadir=/var/lib/mysql --user=mysql --skip-grant-tables --skip-networking=0 --port=3306 > /tmp/mysql.log 2>&1 &
