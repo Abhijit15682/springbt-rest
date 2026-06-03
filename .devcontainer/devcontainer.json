@@ -7,10 +7,18 @@
         "vscjava.vscode-java-pack",
         "vmware.vscode-spring-boot",
         "vscjava.vscode-spring-initializr",
-        "vscjava.vscode-spring-boot-dashboard"
+        "vscjava.vscode-spring-boot-dashboard",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-mysql"
       ]
     }
   },
-  "forwardPorts": [8080],
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/mysql-apt-get:1": {
+      "rootPassword": "rootpassword",
+      "databaseName": "springboot_db"
+    }
+  },
+  "forwardPorts": [8080, 3306],
   "postCreateCommand": "mvn clean install -DskipTests"
 }
