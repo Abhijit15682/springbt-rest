@@ -1,3 +1,35 @@
-apk update && apk add openjdk17-jdk
+#apk update && apk add openjdk17-jdk
 
+sudo su -
 apk update && apk add openjdk21-jdk
+
+
+### MySql ###
+
+# 1. Update packages and install MariaDB (MySQL drop-in replacement)
+sudo apk update && sudo apk add mariadb mariadb-client
+
+# 2. Initialize the data directory (Required for Alpine)
+sudo mysql_install_db --user=mysql --datadir=/var/lib/mysql
+
+# 3. Start the service
+# sudo rc-service mariadb start || mariadb-service start
+# error
+
+sudo mkdir -p /run/mysqld && sudo chown -R mysql:mysql /run/mysqld
+
+
+sudo mariadbd-safe --user=mysql --datadir=/var/lib/mysql &
+
+sudo mysql -u root
+rootpassword
+
+MariaDB [(none)]> ALTER USER 'root'@'localhost' IDENTIFIED VIA mysql_native_password USING PASSWORD('rootpassword');
+
+MariaDB [(none)]> CREATE DATABASE springboot_db;
+
+MariaDB [(none)]> FLUSH PRIVILEGES;
+
+MariaDB [(none)]> EXIT;
+
+mysql -u root -p rootpassword
