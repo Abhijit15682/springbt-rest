@@ -20,11 +20,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/employees")
 public class EmployeeController {
 
-    @Autowired
+    //@Autowired
     private EmployeeRepository employeeRepository;
 
-    @Autowired
+    //@Autowired
     private DepartmentRepository departmentRepository;
+
+    // Constructor injection is preferred over @Autowired on fields
+    public EmployeeController(DepartmentRepository departmentRepository, EmployeeRepository employeeRepository) {
+        this.departmentRepository = departmentRepository;
+        this.employeeRepository = employeeRepository;
+    }
 
     @GetMapping
     public List<EmployeeDTO> getAllEmployees() {

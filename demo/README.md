@@ -65,3 +65,16 @@ curl -X POST http://localhost:8080/api/employees \
      -d '{"firstName": "Alex", "lastName": "Morgan", "email": "alex.morgan@example.com", "deptId": 1}'
 
 
+# Run Command
+/usr/bin/env /usr/lib/jvm/java-21-openjdk/bin/java @/tmp/cp_69zufz63ux7qfyu3rl57yfjth.argfile com.spring.boot.rest.demo.DemoApplication 
+
+
+# Debug Command
+/usr/bin/env /usr/lib/jvm/java-21-openjdk/bin/java -agentlib:jdwp=transport=dt_socket,server=n,suspend=y,address=localhost:40819 @/tmp/cp_69zufz63ux7qfyu3rl57yfjth.argfile com.spring.boot.rest.demo.DemoApplication
+
+
+# URL get
+
+https://expert-telegram-jrjqv959v549c549g-8080.app.github.dev/api/employees/3
+
+https://expert-telegram-jrjqv959v549c549g-8080.app.github.dev/api/departments/1

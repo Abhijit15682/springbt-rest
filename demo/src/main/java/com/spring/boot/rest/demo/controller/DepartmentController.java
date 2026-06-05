@@ -1,8 +1,10 @@
 package com.spring.boot.rest.demo.controller;
 
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.spring.boot.rest.demo.dto.DepartmentDTO;
 import com.spring.boot.rest.demo.entities.Department;
+import com.spring.boot.rest.demo.entities.Views;
 import com.spring.boot.rest.demo.repositories.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +16,22 @@ import java.util.List;
 @RequestMapping("/api/departments")
 public class DepartmentController {
 
-    @Autowired
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
+
+    // Constructor injection is preferred over @Autowired on fields
+    public DepartmentController(DepartmentRepository departmentRepository) {
+        this.departmentRepository = departmentRepository;
+    }
 
     @GetMapping
+    @JsonView(Views.DepartmentDetailed.class) // Instructs Jackson to parse up to employee properties and stop
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
+        //return departmentRepository.findAllWithEmployees();
     }
 
     @GetMapping("/{id}")
+    @JsonView(Views.DepartmentDetailed.class)
     public ResponseEntity<Department> getDepartmentById(@PathVariable Integer id) {
         return departmentRepository.findById(id)
                 .map(ResponseEntity::ok)

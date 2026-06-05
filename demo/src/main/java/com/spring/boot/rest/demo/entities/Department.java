@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
+
 
 @Entity
 @Table(name = "departments")
@@ -12,14 +15,18 @@ public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "dept_id")
+    @JsonView(Views.DepartmentSummary.class) // Included in basic and detailed views
     private Integer deptId;
 
     @Column(name = "dept_name", length = 50, nullable = false)
+    @JsonView(Views.DepartmentSummary.class) // Included in basic and detailed views
     private String deptName;
 
     // One department has many employees
     // mappedBy points to the 'department' field variable in the Employee class
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @JsonView(Views.DepartmentDetailed.class) // ONLY included in the explicit detailed view
     private List<Employee> employees = new ArrayList<>();
 
     // Constructors
