@@ -9,7 +9,8 @@
         "vscjava.vscode-spring-initializr",
         "vscjava.vscode-spring-boot-dashboard",
         "mtxr.sqltools",
-        "mtxr.sqltools-driver-mysql"
+        "mtxr.sqltools-driver-mysql",
+        "ms-vscode.vscode-js-profile-table"
       ]
     }
   },
@@ -19,11 +20,14 @@
       "installMaven": "true",
       "installGradle": "false"
     },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    },
     "ghcr.io/devcontainers-contrib/features/mysql-apt-get:1": {
       "rootPassword": "rootpassword",
       "databaseName": "springboot_db"
     }
   },
-  "forwardPorts": [8080, 3306],
+  "forwardPorts": [8080, 3306, 3000],
   "postCreateCommand": "mvn clean install -DskipTests"
 }
