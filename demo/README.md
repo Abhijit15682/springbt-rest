@@ -78,3 +78,36 @@ curl -X POST http://localhost:8080/api/employees \
 https://expert-telegram-jrjqv959v549c549g-8080.app.github.dev/api/employees/3
 
 https://expert-telegram-jrjqv959v549c549g-8080.app.github.dev/api/departments/1
+
+# Extentions:
+1. Extenstion Pack for Java
+2. Spring Boot Extension Pack
+
+
+# Node Manual Install
+-----------------------------------------------------------------------
+sudo su -
+codespaces-32d812:/workspaces/springbt-rest# apk update && apk upgrade
+
+# Installs the current stable version available in Alpine's repository
+apk add --no-cache nodejs npm
+# Verify Npm Node
+node -v
+npm -v
+
+# React
+# Using Vite (Recommended for speed)
+> npm create vite@latest my-react-app -- --template react
+  # Use code with caution.Using Next.js (For full-stack applications)
+  # > create-next-app@latest my-react-app
+
+# Angular
+> sudo su -
+> npm install -g @angular/cli
+
+> ng new angular-app
+
+> cd my-angular-app
+    -- ng serve --host 0.0.0.0
+    -- ng serve --host 0.0.0.0 --port 4200 --disable-host-check
+> ng serve 
